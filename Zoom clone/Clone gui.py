@@ -24,13 +24,16 @@ def connect_(y_ip, o_ip, y_port, o_port):
         label_.config(text="A field is empty, this might cause an error")
         return -1
 
+    y_port = int(y_port)
+    o_port = int(o_port)
+
     # for video
     receive = StreamingServer(y_ip, y_port)
     sending = CameraClient(o_ip, o_port)
 
     # for audio
-    receive_audio = AudioReceiverClient(y_ip, y_port)
-    sending_audio = AudioSendingClient(o_ip, o_port)
+    receive_audio = AudioReceiverClient(y_ip, y_port + 1)
+    sending_audio = AudioSendingClient(o_ip, o_port + 1)
 
     try:
         t1 = threading.Thread(target=receive.start_server)
@@ -101,7 +104,7 @@ port_ = other_port.get()
 
 your_ip.insert(0, ip__)
 
-connect = Button(root, text='Connect', width=12, height=2, command=lambda: connect_(ip, ip_, port, port_))
+connect = Button(root, text='Connect', width=12, height=2, command=lambda: connect_(your_ip.get(), other_ip.get(), your_port.get(), other_port.get()))
 connect.place(x=40, y=300)
 
 disconnect_ = Button(root, text='Disconnect', width=12, height=2, command=disconnect, state='disabled')
