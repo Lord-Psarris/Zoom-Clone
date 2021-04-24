@@ -50,7 +50,6 @@ def connect_(y_ip, o_ip, y_port, o_port):
 
         time.sleep(3)
 
-        print("Connected!")
         label_.config(text="Connected!")
 
         connect.config(state='disable')
@@ -61,7 +60,7 @@ def connect_(y_ip, o_ip, y_port, o_port):
 
 
 def disconnect():
-    global receive, sending, receive_audio, sending_audio
+    global receive, sending, receive_audio, sending_audio, label_
 
     receive.stop_server()
     sending.stop_stream()
@@ -70,6 +69,8 @@ def disconnect():
 
     connect.config(state='normal')
     disconnect_.config(state='disable')
+
+    label_.config(text="Disconnected!")
 
 
 root = tk.Tk()
@@ -104,7 +105,8 @@ port_ = other_port.get()
 
 your_ip.insert(0, ip__)
 
-connect = Button(root, text='Connect', width=12, height=2, command=lambda: connect_(your_ip.get(), other_ip.get(), your_port.get(), other_port.get()))
+connect = Button(root, text='Connect', width=12, height=2, command=lambda: connect_(your_ip.get(), other_ip.get(),
+                                                                                    your_port.get(), other_port.get()))
 connect.place(x=40, y=300)
 
 disconnect_ = Button(root, text='Disconnect', width=12, height=2, command=disconnect, state='disabled')
